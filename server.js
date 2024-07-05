@@ -20,12 +20,12 @@ try {
     console.log(ipv4Address)
     const visitor_name = req.query.visitor_name
 
-    const response = await axios.get( `http://api.weatherapi.com/v1/current.json?key=583df8ebb99c4a91bb9210247240307&q=${ipv4Address}`)
+    const response = await axios.get( `http://api.weatherapi.com/v1/current.json?key=583df8ebb99c4a91bb9210247240307&q=100.0.0.1`)
   
     const data = response.data
     console.log(data)
     return res.status(200).json({
-      client_ip:remoteAddress,
+      client_ip:'100.0.0.1',
       country:data.location.country,
       location:data.location.name,
       greeting:`Hello, ${visitor_name}!, the temperature is ${data.current.temp_c} celcius in ${data.location.name}`,
