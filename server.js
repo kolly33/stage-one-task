@@ -22,7 +22,7 @@ try {
     
     // const visitor_name = req.query.visitor_name
 
-    const response = await axios.get( `http://api.weatherapi.com/v1/current.json?key=${porcess.env.API_KEYde}&q=${ipv4Address}`)
+    const response = await axios.get( `http://api.weatherapi.com/v1/current.json?key=${porcess.env.API_KEY}&q=${ipv4Address}`)
   
     const data = response.data
     console.log(data)
