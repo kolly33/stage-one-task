@@ -5,27 +5,29 @@ const requestIP = require("request-ip");
 require('dotenv').config();
 
 const PORT = process.env.PORT || 5005
-
+app.set('trust proxy', true)
 app.get("/api/hello", async (req,res)=>{
 
 try {
     //const remoteAddress = requestIP.getClientIp(req);
-    
-    //console.log(remoteAddress)
-    const remoteAddress = req.ip;
-    
-    const isIPv6 = remoteAddress.includes(':');
-    //console.log(isIPv6)
-    const ipv4Address = isIPv6 ? remoteAddress.split(':').reverse()[0] : remoteAddress;
+    const { visitor_name } = req.query || {}; 
+    const ipv4Address = req.ip;
     console.log(ipv4Address)
-    const visitor_name = req.query.visitor_name
+    
+    // const remoteAddress = req.ip;
+    
+    // const isIPv6 = remoteAddress.includes(':');
+  
+    // const ipv4Address = isIPv6 ? remoteAddress.split(':').reverse()[0] : remoteAddress;
+    
+    // const visitor_name = req.query.visitor_name
 
-    const response = await axios.get( `http://api.weatherapi.com/v1/current.json?key=583df8ebb99c4a91bb9210247240307&q=100.0.0.1`)
+    const response = await axios.get( `http://api.weatherapi.com/v1/current.json?key=${porcess.env.API_KEYde}&q=${ipv4Address}`)
   
     const data = response.data
     console.log(data)
     return res.status(200).json({
-      client_ip:'100.0.0.1',
+      client_ip:ipv4Address,
       country:data.location.country,
       location:data.location.name,
       greeting:`Hello, ${visitor_name}!, the temperature is ${data.current.temp_c} celcius in ${data.location.name}`,
